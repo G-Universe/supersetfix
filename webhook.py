@@ -40,7 +40,6 @@ class WebhookContent:
     body: str
     header_data: Optional[HeaderDataType] = None
     data: Optional[dict[str, Any]] = None
-    pdf: Optional[dict[str, bytes]] = None
     images: Optional[list[str, bytes]] = None
 
 
@@ -88,14 +87,9 @@ class WebhookNotification(BaseNotification):  # pylint: disable=too-few-public-m
         if self._content.csv:
             csv_data = {__("%(name)s.csv", name=self._content.name): self._content.csv}
 
-        pdf_data = None
-        if self._content.pdf:
-            pdf_data = {__("%(name)s.pdf", name=self._content.name): self._content.pdf}
-
         return WebhookContent(
             body=body,
             images=images,
-            pdf=pdf_data,
             data=csv_data,
             header_data=self._content.header_data,
         )
